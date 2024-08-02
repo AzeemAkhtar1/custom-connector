@@ -22,7 +22,7 @@ const connectorName = ref('Untitled');
       <LeftSidebar v-model:connectorName="connectorName" @update-selected-item="selectedItem = $event" />
 
       <!-- Right navigation drawer -->
-      <v-navigation-drawer location="right" >
+      <v-navigation-drawer location="right" style="margin-right: -50px; margin-top: -50px; border-left: 3px solid black;" >
         <!-- <v-list>
           <v-list-item title="Drawer right"></v-list-item>
         </v-list> -->

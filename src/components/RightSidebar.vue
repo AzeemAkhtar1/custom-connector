@@ -7,11 +7,14 @@
  -->
 
 
-<template>
+ <template>
     <v-navigation-drawer
+      app
+      right
+      temporary
       v-model="drawer"
       width="300"
-      right
+      style="border-left: 2px solid black;"
     >
       
         <v-btn :disabled="!isConditionMet"  color="primary">
