@@ -13,19 +13,18 @@
       right
       temporary
       v-model="drawer"
-      width="300"
-      style="border-left: 2px solid black;"
+      width="400"
     >
       
+    <v-list style="display: inline-flex" class="pt-5 pl-3">
         <v-btn :disabled="!isConditionMet"  color="primary">
             <v-icon left>mdi-account</v-icon>
             Testing Values
         </v-btn>
-        <!-- <v-list-item @click="showSettings"> -->
-          <!-- <v-list-item-icon> -->
-            <v-icon @click="showSettings" class="ml-7">mdi-cog</v-icon>
-          <!-- </v-list-item-icon> -->
-        <!-- </v-list-item> -->
+        <v-list-item @click="showSettings">
+            <v-icon @click="showSettings" class="ml-2 mr-3 mb-3">mdi-cog</v-icon>
+        </v-list-item>
+    </v-list>
       
   
       <v-divider></v-divider>

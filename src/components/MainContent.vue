@@ -19,7 +19,33 @@
               </v-col>
             </v-row>
           </v-card>
-        </v-col>
+        </v-col>        
+      </v-row>
+    
+    <!-- Auth Specify Options Container -->
+      <v-row v-if="selectedItem === 'Global Configuration'">
+        <v-col>
+          <v-card class="py-4 px-4" elevation="2">
+            <v-row class=" mt-4">
+              <v-col>
+                <p>Authentication</p>
+
+                <v-combobox
+                label="Method"
+                :items="['No Auth', 'API Key', 'Bearer', 'Basic HTTP', 'OAuth', 'Session Token']"
+                ></v-combobox>
+
+                <!-- <v-text-field
+                  v-model="apiBaseUrl"
+                  label="API Base URL"
+                  outlined
+                  dense
+                >
+                </v-text-field> -->
+              </v-col>
+            </v-row>
+          </v-card>
+        </v-col>        
       </v-row>
   
       <!-- User Inputs Section -->
