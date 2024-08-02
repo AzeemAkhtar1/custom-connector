@@ -11,6 +11,7 @@
     <v-navigation-drawer
       v-model="drawer"
       width="300"
+      right
     >
       
         <v-btn :disabled="!isConditionMet"  color="primary">
