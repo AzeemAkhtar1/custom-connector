@@ -51,7 +51,7 @@
               <div v-if="selectedApiKeyMethod === 'Header'"> 
                 <p>Header Name</p>
                 <v-text-field
-                  v-model="apiKey"
+                  v-model="headerName"
                   outlined
                   dense
                 ></v-text-field>
@@ -60,7 +60,7 @@
               <div v-if="selectedApiKeyMethod === 'Query Parameter'"> 
                 <p>Parameter Name</p>
                 <v-text-field
-                  v-model="apiKey"
+                  v-model="parameterName"
                   outlined
                   dense
                 ></v-text-field>
@@ -69,16 +69,16 @@
               <div v-if="selectedApiKeyMethod === 'Body Data (urlencoded form)'"> 
                 <p>Key Name</p>
                 <v-text-field
-                  v-model="apiKey"
+                  v-model="bodyData"
                   outlined
                   dense
                 ></v-text-field>
               </div>
 
-              <div v-if="selectedApiKeyMethod === 'Body JSON payload'"> 
+              <div v-if="selectedApiKeyMethod === 'Body JSON Payload'"> 
                 <p>Key Name</p>
                 <v-text-field
-                  v-model="apiKey"
+                  v-model="bodyJsonPayload"
                   outlined
                   dense
                 ></v-text-field>
@@ -130,16 +130,16 @@
                   @change="onOAuthMethodChange"
               ></v-combobox>
 
-              <div v-if = "selectedOAuthGrantMethod = 'refresh_endpoint'">
+              <div v-if = "selectedOAuthGrantMethod === 'refresh_endpoint'">
                 <v-text-field
-                  v-model="refresh_endpoint"
+                  v-model="clientId"
                   label="Client Id"
                   outlined
                   dense
                 ></v-text-field>
 
                 <v-text-field
-                  v-model="refresh_endpoint"
+                  v-model="clientSecret"
                   label="Client Secret"
                   type="password"
                   outlined
@@ -147,7 +147,7 @@
                 ></v-text-field>
 
                 <v-text-field
-                  v-model="refresh_endpoint"
+                  v-model="refresh_token"
                   label="Refresh Token"
                   outlined
                   dense
@@ -156,14 +156,14 @@
 
               <div v-if="selectedOAuthGrantMethod === 'client_credentials'">
                 <v-text-field
-                  v-model="client_credentials"
+                  v-model="clientId"
                   label="Client Id"
                   outlined
                   dense
                 ></v-text-field>
 
                 <v-text-field
-                  v-model="client_credentials"
+                  v-model="clientSecret"
                   label="Client Secret"
                   type="password"
                   outlined
@@ -174,12 +174,110 @@
 
             <!-- If Selected Method is Session Token -->
               <template v-if="selectedAuthMethod === 'Session Token'">
+              <h4>Session Token Retrieval</h4>
+                 <p>URL</p>
                 <v-text-field
                   v-model="sessionToken"
-                  label="Session Token"
                   outlined
                   dense
                 ></v-text-field>
+
+              <!-- ComboBox for Session Token HTTP Method like Get and Post -->
+                <v-row>
+                  <v-col cols="6">
+                    <v-combobox
+                      v-model="selectedSessionTokenHttpMethod"
+                      :items="sessionTokenHttpMethods"
+                      @change="onOAuthMethodChange"  
+              ></v-combobox>
+                  </v-col>
+                </v-row>
+
+
+              <!-- Combobox for Session Token Auth Method -->
+                <p>Authentication Method</p>
+              <v-combobox
+                v-model="selectedSessionAuthMethod"
+                :items="sessionAuthMethods"
+                @change="onSessionAuthMethodChange"
+              ></v-combobox>
+
+
+              <!-- If Selected Method is Session API KEY -->
+              <template v-if="selectedSessionAuthMethod === 'API Key'">
+                <p>Inject Into</p>
+                <v-combobox
+                  v-model="selectedSessionApiKeyMethod"
+                  :items="sessionApiKeyMethods"
+                  @change="onSessionApiKeyMethodChange"
+              ></v-combobox>
+
+              <div v-if="selectedSessionApiKeyMethod === 'Header'"> 
+                <p>Header Name</p>
+                <v-text-field
+                  v-model="sessionHeaderName"
+                  outlined
+                  dense
+                ></v-text-field>
+              </div>
+
+              <div v-if="selectedSessionApiKeyMethod === 'Query Parameter'"> 
+                <p>Parameter Name</p>
+                <v-text-field
+                  v-model="sessionParameterName"
+                  outlined
+                  dense
+                ></v-text-field>
+              </div>
+
+              <div v-if="selectedSessionApiKeyMethod === 'Body Data (urlencoded form)'"> 
+                <p>Key Name</p>
+                <v-text-field
+                  v-model="sessionBodyData"
+                  outlined
+                  dense
+                ></v-text-field>
+              </div>
+
+              <div v-if="selectedSessionApiKeyMethod === 'Body JSON Payload'"> 
+                <p>Key Name</p>
+                <v-text-field
+                  v-model="sessionBodyJsonPayload"
+                  outlined
+                  dense
+                ></v-text-field>
+              </div>
+
+              </template>
+
+              <!-- If Session Selected Method is Bearer -->
+              <template v-if="selectedSessionAuthMethod === 'Bearer'">
+                <v-text-field
+                  v-model="sessionBearerToken"
+                  label="Bearer Token"
+                  outlined
+                  dense
+                ></v-text-field>
+              </template>
+
+              <!-- If Selected Method is Basic HTTP -->
+              <template v-if="selectedSessionAuthMethod === 'Basic HTTP'">
+                <v-text-field
+                  v-model="sessionUsername"
+                  label="Username"
+                  outlined
+                  dense
+                ></v-text-field>
+                <v-text-field
+                  v-model="sessionPassword"
+                  label="Password"
+                  type="password"
+                  outlined
+                  dense
+                ></v-text-field>
+              </template>
+
+
               </template>
 
               
@@ -306,18 +404,27 @@ export default {
       selectedApiKeyMethod: 'Header',
       apiKeyMethods: ['Query Parameter', 'Header', 'Body Data (urlencoded form)', 'Body JSON Payload'],
 
-      selectedOAuthGrantMethod: '',
+      selectedOAuthGrantMethod: 'refresh_endpoint',
       oauthGrantMethods: ['refresh_endpoint', 'client_credentials'],
+
+      selectedSessionTokenHttpMethod: 'POST',
+      sessionTokenHttpMethods: ['GET', 'POST'],
+
+      // Session Token Authentication Method
+      selectedSessionAuthMethod: 'No Auth',
+      sessionAuthMethods: ['No Auth', 'API Key', 'Bearer', 'Basic HTTP'],
+
+      selectedSessionApiKeyMethod: 'Header',
+      sessionApiKeyMethods: ['Query Parameter', 'Header', 'Body Data (urlencoded form)', 'Body JSON Payload'],
 
     // Auth Methods
       apiKey: '',
       bearerToken: '',
       username: '',
       password: '',
-
-    // API key Methods
       queryParameter: '',
-      header: '',
+      headerName: '',
+      parameterName: '',
       bodyData: '',
       bodyJsonPayload: '',
 
@@ -329,6 +436,19 @@ export default {
       clientSecret: '',
       refresh_token: '',
       sessionToken: '',
+
+
+      // Session Auth Methods 
+      sessionApiKey: '',
+      queryParameter: '',
+      sessionHeaderName: '',
+      sessionParameterName: '',
+      sessionBodyData: '',
+      sessionBodyJsonPayload: '',
+      sessionBearerToken: '',
+      sessionUsername: '',
+      sessionPassword: '',
+
 
 
       newUserInput: {
@@ -409,6 +529,18 @@ export default {
       this.sessionToken= '',
       this.refresh_endpoint= '',
       this.client_credentials= '';
+    },
+
+    onSessionAuthMethodChange() {
+      // Reset all fields when changing auth method
+      this.apiKey = '';
+      this.bearerToken = '';
+      this.username = '';
+      this.password = '';
+      this.tokenRefreshEndpoint= '',
+      this.clientId = '';
+      this.clientSecret = '';
+      this.sessionToken = '';
     },
 
   },
