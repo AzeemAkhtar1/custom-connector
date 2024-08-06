@@ -1,5 +1,4 @@
 <template>
-  <v-navigation-drawer app permanent width="300">
     <v-list dense>
       <!-- Connector Name Input -->
       <v-list-item class="py-2 px-3">
@@ -34,7 +33,6 @@
       <Streams :streams="streams" @add-stream="addStream" />
 
     </v-list>
-  </v-navigation-drawer>
 </template>
 
 <script>

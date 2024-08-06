@@ -9,5 +9,3 @@ import App from './App.vue'
 import vuetify from './plugins/Vuetify' // Import from a separate plugin file
 
 createApp(App).use(vuetify).mount('#app')
-
- 

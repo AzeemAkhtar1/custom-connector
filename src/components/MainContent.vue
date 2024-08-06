@@ -427,6 +427,7 @@ export default {
       this.clientId = '';
       this.clientSecret = '';
       this.sessionToken = '';
+      
     },
 
     // Handle changes in authentication method
