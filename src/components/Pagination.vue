@@ -522,8 +522,6 @@
         ],
 
 
-
-
         // Cursor Pagination Vars
         nextPageCursor: 'Response',
 
@@ -548,10 +546,6 @@
           'Body Data (urlencoded form)',
           'Body JSON payload'
         ],
-
-
-
-
 
 
 
